@@ -1,0 +1,42 @@
+{
+  "schema": "subactor.marketplace-process/v1",
+  "id": "digital-product-multichannel-sale",
+  "invariants": [
+    "draft_before_publish",
+    "provider_capability_preflight",
+    "jurisdiction_and_tax_preflight",
+    "no_credential_in_payload",
+    "evidence_per_publication",
+    "one_provider_failure_does_not_stop_other_channels"
+  ],
+  "providers": [
+    {"id":"allegro-pl","jurisdictions":["PL","EU"],"execution":"official_api","connector":"marketplace://allegro/**","products":["physical","digital-code"]},
+    {"id":"amazon-eu","jurisdictions":["EU"],"execution":"official_api","connector":"marketplace://amazon-sp-api/**","products":["physical"]},
+    {"id":"ebay-global","jurisdictions":["EU","UK","US"],"execution":"official_api","connector":"marketplace://ebay/**","products":["physical"]},
+    {"id":"etsy-global","jurisdictions":["EU","UK","US"],"execution":"official_api","connector":"marketplace://etsy/**","products":["digital-file","physical"]},
+    {"id":"shopify-direct","jurisdictions":["EU","UK","US"],"execution":"official_api","connector":"marketplace://shopify/**","products":["digital-file","service","physical"]},
+    {"id":"useme-pl","jurisdictions":["PL","EU"],"execution":"authorized_human_capability","connector":"human://provider/marketplace/useme/**","products":["service"]},
+    {"id":"upwork-global","jurisdictions":["EU","UK","US"],"execution":"authorized_human_capability","connector":"human://provider/marketplace/upwork/**","products":["service"]},
+    {"id":"fiverr-global","jurisdictions":["EU","UK","US"],"execution":"authorized_human_capability","connector":"human://provider/marketplace/fiverr/**","products":["service"]}
+  ],
+  "steps": [
+    {"id":"sale-authority","group":"governance","uri":"organization://authority/order/query/verify"},
+    {"id":"product-normalize","group":"catalog","uri":"marketplace://catalog/product/command/normalize","depends_on":["sale-authority"]},
+    {"id":"legal-tax-preflight","group":"legal","uri":"legal://commerce/product/query/eligibility","depends_on":["product-normalize"],"labels":["legal","financial-impact"]},
+    {"id":"content-package","group":"catalog","uri":"marketplace://catalog/assets/command/package","depends_on":["product-normalize"]},
+    {"id":"allegro-preflight","group":"allegro-pl","provider":"allegro-pl","uri":"marketplace://provider/account/query/capabilities","depends_on":["legal-tax-preflight"]},
+    {"id":"allegro-draft","group":"allegro-pl","provider":"allegro-pl","uri":"marketplace://provider/listing/command/draft","depends_on":["allegro-preflight","content-package"]},
+    {"id":"allegro-publish","group":"allegro-pl","provider":"allegro-pl","uri":"marketplace://provider/listing/command/publish","depends_on":["allegro-draft"]},
+    {"id":"ebay-preflight","group":"ebay-global","provider":"ebay-global","uri":"marketplace://provider/account/query/capabilities","depends_on":["legal-tax-preflight"]},
+    {"id":"ebay-draft","group":"ebay-global","provider":"ebay-global","uri":"marketplace://provider/listing/command/draft","depends_on":["ebay-preflight","content-package"]},
+    {"id":"ebay-publish","group":"ebay-global","provider":"ebay-global","uri":"marketplace://provider/listing/command/publish","depends_on":["ebay-draft"]},
+    {"id":"etsy-preflight","group":"etsy-global","provider":"etsy-global","uri":"marketplace://provider/account/query/capabilities","depends_on":["legal-tax-preflight"]},
+    {"id":"etsy-draft","group":"etsy-global","provider":"etsy-global","uri":"marketplace://provider/listing/command/draft","depends_on":["etsy-preflight","content-package"]},
+    {"id":"etsy-publish","group":"etsy-global","provider":"etsy-global","uri":"marketplace://provider/listing/command/publish","depends_on":["etsy-draft"]},
+    {"id":"shopify-preflight","group":"shopify-direct","provider":"shopify-direct","uri":"marketplace://provider/account/query/capabilities","depends_on":["legal-tax-preflight"]},
+    {"id":"shopify-draft","group":"shopify-direct","provider":"shopify-direct","uri":"marketplace://provider/listing/command/draft","depends_on":["shopify-preflight","content-package"]},
+    {"id":"shopify-publish","group":"shopify-direct","provider":"shopify-direct","uri":"marketplace://provider/listing/command/publish","depends_on":["shopify-draft"]},
+    {"id":"service-marketplace-route","group":"service-sales","uri":"human://registry/actor/query/available","depends_on":["legal-tax-preflight"],"labels":["financial-impact"]},
+    {"id":"sale-evidence","group":"governance","uri":"evidence://marketplace/publication/command/seal","depends_on":["allegro-publish","ebay-publish","etsy-publish","shopify-publish"]}
+  ]
+}

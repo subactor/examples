@@ -1,0 +1,19 @@
+CONTRACT marketplace-sales-operator
+DELEGATED_BY organization:constitutional-authority
+PRINCIPAL bot:marketplace-sales
+
+ALLOW MODEL marketplace-sales.pl.aql
+ALLOW OQL marketplace.account.preflight
+ALLOW OQL marketplace.listing.draft
+ALLOW OQL marketplace.listing.publish
+ALLOW OQL human.work.assign
+ALLOW OQL evidence.seal
+ALLOW URI_PROCESS marketplace://**
+ALLOW URI_PROCESS legal://commerce/**
+ALLOW URI_PROCESS human://registry/actor/query/available
+ALLOW URI_PROCESS evidence://marketplace/**
+ALLOW EMAIL_DOMAIN subactor.com
+
+LIMIT STEPS 80
+LIMIT EXECUTIONS 5000
+EXPIRES 2030-12-31T23:59:59Z

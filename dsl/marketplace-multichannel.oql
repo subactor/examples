@@ -1,0 +1,27 @@
+VERSION: 1
+FLOW multichannel product publication:
+  META owner "bot:marketplace-sales"
+  META continuity "provider-failure-isolated"
+  STEP authority organization.goal.verify "sale-authority"
+    EXPECT mandate_active == true
+    SAVE authority
+  STEP product process.run "marketplace://catalog/product/command/normalize"
+    SAVE product
+  STEP legal workflow.request "legal://commerce/product/query/eligibility"
+    WITH product = "$state.product"
+    EXPECT consumer_terms_ready == true
+    SAVE legal
+  STEP assets process.run "marketplace://catalog/assets/command/package"
+    SAVE assets
+  STEP provider process.run "marketplace://provider/account/query/capabilities"
+    EXPECT account_authorized == true
+    SAVE provider
+  STEP draft process.run "marketplace://provider/listing/command/draft"
+    WITH product = "$state.product"
+    WITH assets = "$state.assets"
+    EXPECT state == "draft"
+    SAVE listing
+  STEP publish process.run "marketplace://provider/listing/command/publish"
+    WITH listing = "$state.listing"
+    WITH legal = "$state.legal"
+    EXPECT state == "published"

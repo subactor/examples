@@ -1,0 +1,14 @@
+{
+  "schema":"subactor.mock-connectors/v1",
+  "routes":{
+    "organization://authority/order/query/verify":{"response":{"ok":true,"mandate_active":true}},
+    "marketplace://catalog/product/command/normalize":{"response":{"ok":true,"product_id":"DIGITAL-001","kind":"digital-file"}},
+    "legal://commerce/product/query/eligibility":{"response":{"ok":true,"jurisdiction":"PL-EU","vat_classification":"electronic-service","consumer_terms_ready":true}},
+    "marketplace://catalog/assets/command/package":{"response":{"ok":true,"bundle_id":"BUNDLE-001","checksums":true}},
+    "marketplace://provider/account/query/capabilities":{"response":{"ok":true,"provider":"${step.provider}","account_authorized":true,"publish_supported":true}},
+    "marketplace://provider/listing/command/draft":{"response":{"ok":true,"provider":"${step.provider}","state":"draft","listing_id":"LIST-${step.provider}"}},
+    "marketplace://provider/listing/command/publish":{"response":{"ok":true,"provider":"${step.provider}","state":"published","evidence":true}},
+    "human://registry/actor/query/available":{"response":{"ok":true,"actor":"provider:marketplace-operator","contract_active":true}},
+    "evidence://marketplace/publication/command/seal":{"response":{"ok":true,"bundle_id":"MARKETPLACE-EVIDENCE","sealed":true}}
+  }
+}
