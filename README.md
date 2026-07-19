@@ -2,6 +2,13 @@
 
 Executable multi-jurisdiction scenarios for testing Subactor's continuity model across human roles, contracts and legal constraints. The repository uses the real sibling `orchestrator/src/resolution-engine` implementation.
 
+## Status (2026-07-19)
+
+Pakiet obejmuje proces firmy HR/legal/admin/dev/web oraz scenariusze PL, DE,
+UK i California. Dodano neutralny proces sprzedaży przez Allegro, Amazon, eBay,
+Etsy, Shopify i zakontraktowanych operatorów marketplace. `npm test` wykonuje
+27 scenariuszy bez globalnego `waiting_input`.
+
 ## Run
 
 Requirements: Node.js 20+ and this repository located next to `orchestrator` in the Subactor workspace.
