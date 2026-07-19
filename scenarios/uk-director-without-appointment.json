@@ -1,0 +1,5 @@
+{
+  "id":"uk-director-without-appointment","jurisdiction":"uk","organization":"demo-global",
+  "facts":{"contract_type":"director-office-holder","action":"organization.represent","mandate_active":false},
+  "budget_category":"legal_continuity","estimated_cost_eur":500
+}

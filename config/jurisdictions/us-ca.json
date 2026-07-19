@@ -1,0 +1,18 @@
+{
+  "schema":"subactor.examples.jurisdiction/v1","id":"us-ca","country_code":"US-CA","as_of":"2026-07-19",
+  "contract_types":{
+    "employment":{"required_facts":["action","significant_effect"]},
+    "b2b-services":{"required_facts":["action","abc_a","abc_b","abc_c"]},
+    "temporary-agency":{"required_facts":["action","provider_contract_active"]},
+    "director-office-holder":{"required_facts":["action","mandate_active"]},
+    "authority-mandate":{"required_facts":["action","mandate_active","mandate_scope_matches"]}
+  },
+  "rules":[
+    {"id":"ca-abc-test-failed-a","priority":100,"when":{"contract_type":"b2b-services","abc_a":false},"decision":"authorized_human","reason_code":"contractor_classification_failed","required_capabilities":["legal.employment.classify"],"required_evidence":["abc_test_analysis","engagement_conversion_plan"],"legal_sources":["CA-DIR-ABC"]},
+    {"id":"ca-abc-test-failed-b","priority":100,"when":{"contract_type":"b2b-services","abc_b":false},"decision":"authorized_human","reason_code":"contractor_classification_failed","required_capabilities":["legal.employment.classify"],"required_evidence":["abc_test_analysis","engagement_conversion_plan"],"legal_sources":["CA-DIR-ABC"]},
+    {"id":"ca-abc-test-failed-c","priority":100,"when":{"contract_type":"b2b-services","abc_c":false},"decision":"authorized_human","reason_code":"contractor_classification_failed","required_capabilities":["legal.employment.classify"],"required_evidence":["abc_test_analysis","engagement_conversion_plan"],"legal_sources":["CA-DIR-ABC"]},
+    {"id":"ca-contractor-eligible","priority":70,"when":{"contract_type":"b2b-services","abc_a":true,"abc_b":true,"abc_c":true,"action":"work.assign"},"decision":"autonomous","reason_code":"abc_fixture_passed","required_evidence":["abc_test_analysis","services_contract","invoice"],"legal_sources":["CA-DIR-ABC"],"notes":["Test fixture only; statutory exceptions and Borello may change the applicable test."]},
+    {"id":"ca-routine-task","priority":50,"when":{"contract_type":"employment","action":"work.assign","significant_effect":false},"decision":"autonomous","reason_code":"routine_within_role","required_evidence":["role_contract"]}
+  ],
+  "default_rule":{"id":"ca-review-default","decision":"authorized_human","reason_code":"jurisdiction_review_required","required_capabilities":["legal.employment.review"],"legal_sources":["CA-DIR-ABC"]}
+}

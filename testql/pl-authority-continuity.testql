@@ -1,0 +1,13 @@
+VERSION: 1
+SUITE PL authority continuity:
+  TEST founder outage activates deputy:
+    EXPECT founder.unavailability_signals >= 2
+    EXPECT founder.unavailable_hours >= 4
+    EXPECT resolution.actor == "human:deputy-founder"
+  TEST single channel failure preserves authority:
+    EXPECT founder.unavailability_signals == 1
+    EXPECT resolution.actor == "human:founder"
+  TEST missing mandate cannot be created by AQL:
+    EXPECT mandate.active == false
+    EXPECT resolution.task_state == "legally_impossible"
+    EXPECT resolution.continue_unblocked == true

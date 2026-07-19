@@ -1,0 +1,10 @@
+VERSION: 1
+SUITE UK employment continuity:
+  TEST significant ADM has meaningful review:
+    EXPECT decision.significant_effect == true
+    EXPECT decision.solely_automated == true
+    EXPECT resolution.required_capability == "human.employment.decision"
+    EXPECT evidence contains "challenge_path"
+  TEST contractor status follows reality:
+    EXPECT engagement.independent_in_practice == false
+    EXPECT resolution.required_capability == "legal.employment.classify"

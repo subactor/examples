@@ -1,0 +1,29 @@
+DECIDE "company_escalation_pressure" {
+  AUDIENCE locale="pl-PL" role="continuity-operator" knowledge="expert"
+  INTENT action=escalate artifact=company_task confidence=1.0
+  SUBJECT "SLA, wpływ na kandydata, przychód i bezpieczeństwo"
+  EXPERIENCE pace=deliberate load=high friction=low
+  AFFECT labels=["time_pressure", "candidate_impact", "revenue_risk"] needs=["continuity", "clarity", "lawful_path"]
+  DECISION stage=acting commitment=high next_need=authorized_substitute
+  EXPECT hard=["no_global_pause", "no_authority_expansion", "candidate_fairness", "evidence_bundle"]
+  EXPECT quality=["sla_visible", "multi_channel", "substitute_ready"]
+  PROTECT ["candidate_dignity", "personal_data", "worker_rights", "credentials"]
+  SELECT_PROCESS "resolution-continuity-escalation" {
+    PROFILE pace=fast density=low max_sections=4
+    STEP pressure_measure context.freeze approval=false
+    STEP planfile_ticket task.create approval=false
+    STEP email_reminder email.send approval=false
+    STEP deputy_substitute human.work.replace approval=false
+    STEP quorum_resolve authority.quorum approval=false
+    STEP provider_fallback outsourcing.work_order.create approval=false
+    STEP evidence_seal evidence.seal approval=false
+  }
+  GUARD no_false_scarcity
+  GUARD no_hidden_cost
+  GUARD no_shaming
+  GUARD no_fear_amplification
+  GUARD no_sensitive_inference
+  GUARD respect_opt_out
+  GUARD behavior_is_soft_only
+  GUARD content_requires_evidence
+}

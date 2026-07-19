@@ -1,0 +1,6 @@
+VERSION: 1
+SUITE California contractor continuity:
+  TEST ABC failure triggers classification path:
+    EXPECT engagement.abc_b == false
+    EXPECT resolution.required_capability == "legal.employment.classify"
+    EXPECT platform.paused == false

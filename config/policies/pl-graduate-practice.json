@@ -1,0 +1,17 @@
+{
+  "schema":"subactor.rule-policy/v1",
+  "id":"pl-graduate-practice-eligibility",
+  "jurisdiction":"PL",
+  "legal_basis":["PL-PRAKTYKI-ABSOLWENCKIE"],
+  "required_facts":["age_at_start","minimum_education_complete","duration_months","written_agreement","insurance_confirmed","bhp_ready"],
+  "missing_reason":"facts_incomplete",
+  "rules":[
+    {"field":"age_at_start","operator":"lt","value":30,"reason":"age_limit_exceeded"},
+    {"field":"minimum_education_complete","operator":"eq","value":true,"reason":"education_requirement_missing"},
+    {"field":"duration_months","operator":"lte","value":3,"reason":"duration_limit_exceeded"},
+    {"field":"written_agreement","operator":"eq","value":true,"reason":"written_agreement_missing"},
+    {"field":"insurance_confirmed","operator":"eq","value":true,"reason":"insurance_not_confirmed"},
+    {"field":"bhp_ready","operator":"eq","value":true,"reason":"bhp_not_ready"}
+  ],
+  "evidence_required":["identity","education","age_at_start","written_agreement","program","bhp","insurance","legal_review"]
+}

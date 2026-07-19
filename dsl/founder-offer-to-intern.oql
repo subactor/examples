@@ -1,0 +1,56 @@
+VERSION: 1
+FLOW founder order to signed internship and first ticket:
+  META owner "organization:constitutional-authority"
+  META continuity "never-global-pause"
+  STEP authority organization.goal.verify "founder-order"
+    EXPECT mandate_active == true
+    SAVE authority
+  STEP legal_preflight workflow.request "graduate-practice-eligibility"
+    WITH candidate = "$state.candidate"
+    EXPECT eligible == true
+    SAVE legal
+  STEP project_manifest process.run "fs://projects/manifest/query/read"
+    SAVE project
+  STEP plesk_capacity process.run "plesk://host/subscription/query/capabilities"
+    WITH subscription = "$state.project.subscription"
+    EXPECT can_create_domain == true
+    SAVE capacity
+  STEP site process.run "site-generator://host/site/command/generate"
+    WITH source = "$state.project.source"
+    SAVE site
+  STEP domain process.run "plesk://host/domain/command/ensure"
+    WITH domain = "$state.project.domain"
+    WITH subscription = "$state.project.subscription"
+    WITH apply = false
+    EXPECT authorized == true
+    SAVE domain
+  STEP conversation process.run "recruitment://candidate/conversation/command/start"
+    WITH candidate = "$state.candidate.id"
+    SAVE conversation
+  STEP decision process.run "human://registry/actor/command/employment-decision"
+    WITH evidence = "$state.conversation"
+    EXPECT meaningful_review == true
+    SAVE decision
+  STEP contract process.run "document://worker-contract/command/generate"
+    WITH legal_basis = "$state.legal"
+    EXPECT draft == false
+    SAVE contract
+  STEP signature process.run "esign://provider/envelope/command/create"
+    WITH document = "$state.contract"
+    SAVE envelope
+  STEP signed process.run "esign://provider/envelope/query/status"
+    WITH envelope = "$state.envelope"
+    EXPECT status == "signed"
+    SAVE signed
+  STEP github_access process.run "github://host/repo/collaborator/command/invite"
+    WITH permission = "triage"
+    WITH signed_basis = "$state.signed"
+    SAVE access
+  STEP ticket process.run "github://host/issue/command/create"
+    WITH labels = ["internship", "education", "first-task"]
+    WITH access = "$state.access"
+    SAVE ticket
+  STEP evidence process.run "evidence://worker/onboarding/command/seal"
+    WITH ticket = "$state.ticket"
+    WITH signature = "$state.signed"
+    EXPECT sealed == true

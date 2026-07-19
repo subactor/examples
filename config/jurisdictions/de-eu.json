@@ -1,0 +1,17 @@
+{
+  "schema":"subactor.examples.jurisdiction/v1","id":"de-eu","country_code":"DE","as_of":"2026-07-19",
+  "contract_types":{
+    "employment":{"required_facts":["action","significant_effect","works_council_exists"]},
+    "b2b-services":{"required_facts":["action","independent_in_practice","within_contract"]},
+    "temporary-agency":{"required_facts":["action","agency_permit_valid"]},
+    "authority-mandate":{"required_facts":["action","mandate_active","mandate_scope_matches"]}
+  },
+  "rules":[
+    {"id":"de-monitoring-codetermination","priority":100,"when":{"contract_type":"employment","action":"performance.monitor","works_council_exists":true},"decision":"authorized_human","reason_code":"codetermination_required","required_capabilities":["human.works_council.codetermination"],"required_evidence":["works_council_agreement","dpia"],"legal_sources":["DE-BETRVG-87","EU-GDPR-22"]},
+    {"id":"de-agency-permit-missing","priority":95,"when":{"contract_type":"temporary-agency","agency_permit_valid":false},"decision":"prohibited","reason_code":"agency_permit_missing","required_capabilities":["legal.agency-work.review"],"legal_sources":["DE-AUEG-1"]},
+    {"id":"de-false-self-employment-risk","priority":90,"when":{"contract_type":"b2b-services","independent_in_practice":false},"decision":"authorized_human","reason_code":"worker_classification_risk","required_capabilities":["legal.employment.classify"],"required_evidence":["control_analysis","integration_analysis","social_insurance_review"],"legal_sources":["DE-BMAS-WERKVERTRAG"]},
+    {"id":"de-employment-significant-decision","priority":80,"when":{"contract_type":"employment","significant_effect":true},"decision":"authorized_human","reason_code":"authorized_actor_required","required_capabilities":["human.employment.decision"],"required_evidence":["meaningful_review","appeal_path"],"legal_sources":["EU-GDPR-22","EU-AI-ACT-EMPLOYMENT"]},
+    {"id":"de-routine-task","priority":50,"when":{"contract_type":"employment","action":"work.assign","significant_effect":false},"decision":"autonomous","reason_code":"routine_within_role","required_evidence":["role_contract"]}
+  ],
+  "default_rule":{"id":"de-legal-review-default","decision":"authorized_human","reason_code":"jurisdiction_review_required","required_capabilities":["legal.employment.review"],"legal_sources":["DE-BMAS-WERKVERTRAG"]}
+}

@@ -1,0 +1,10 @@
+{
+  "schema":"subactor.examples.contract-types/v1",
+  "contract_types":{
+    "employment":{"work_order_allowed":false,"substitution":"employer_process_only","identity_required":true},
+    "b2b-services":{"work_order_allowed":true,"requires_framework_agreement":true,"classification_review":true,"identity_required":true},
+    "temporary-agency":{"work_order_allowed":true,"requires_licensed_or_permitted_provider":true,"identity_required":true},
+    "director-office-holder":{"work_order_allowed":false,"requires_corporate_appointment":true},
+    "authority-mandate":{"work_order_allowed":false,"requires_preexisting_mandate":true,"scope_cannot_be_expanded_by_aql":true}
+  }
+}

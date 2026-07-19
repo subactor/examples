@@ -1,0 +1,14 @@
+{
+  "name": "@subactor/autonomy-examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Executable multi-jurisdiction autonomy and human-contract policy scenarios for Subactor",
+  "scripts": {
+    "test": "node tests/all.mjs",
+    "scenario": "node bin/run-scenario.mjs",
+    "scenario:all": "node bin/run-all.mjs",
+    "company": "node bin/run-company.mjs"
+  },
+  "engines": {"node": ">=20"}
+}

@@ -1,0 +1,5 @@
+{
+  "id":"uk-automated-termination","jurisdiction":"uk","organization":"demo-global",
+  "facts":{"contract_type":"employment","action":"employment.terminate","significant_effect":true,"solely_automated":true},
+  "budget_category":"employment_continuity","estimated_cost_eur":300
+}

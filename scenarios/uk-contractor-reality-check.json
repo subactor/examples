@@ -1,0 +1,5 @@
+{
+  "id":"uk-contractor-reality-check","jurisdiction":"uk","organization":"demo-global",
+  "facts":{"contract_type":"b2b-services","action":"work.assign","independent_in_practice":false,"substitution_right":"limited"},
+  "budget_category":"legal_continuity","estimated_cost_eur":700
+}

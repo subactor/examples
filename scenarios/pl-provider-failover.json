@@ -1,0 +1,6 @@
+{
+  "id":"pl-provider-failover","jurisdiction":"pl-eu","organization":"demo-global",
+  "facts":{"contract_type":"b2b-services","action":"contractor.classify","framework_agreement_active":true,"within_contract":false},
+  "attempts":["provider:pl-legal-primary"],
+  "budget_category":"legal_continuity","estimated_cost_eur":1000
+}

@@ -1,0 +1,12 @@
+{
+  "schema":"subactor.project-manifest/v1",
+  "projects":[{
+    "id":"autonomicznosc-pl-ci-fixture",
+    "domain":"autonomicznosc.pl",
+    "subscription":"prototypowanie.pl",
+    "source":".",
+    "entrypoint":"index.html",
+    "publication":{"subscription_preflight_uri":"plesk://host/subscription/query/capabilities","domain_ensure_uri":"plesk://host/domain/command/ensure"},
+    "gates":["subscription_can_create_domain","dns_ready","tls_ready"]
+  }]
+}

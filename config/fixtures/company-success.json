@@ -1,0 +1,8 @@
+{
+  "organization":{"id":"demo-company","authority":"organization:constitutional-authority"},
+  "founder":{"actor":"human:founder","order_signed":true,"available":true},
+  "candidate":{"id":"candidate-demo-001","name":"Demo Candidate","email":"candidate@example.test","age_at_start":24,"minimum_education_complete":true,"relationship":"graduate-practice","unpaid":true,"duration_months":2,"written_agreement":true,"insurance_confirmed":true,"bhp_ready":true},
+  "project":{"id":"autonomicznosc-pl","domain":"autonomicznosc.pl","subscription":"prototypowanie.pl","source":"projekty/02_landing"},
+  "github":{"owner":"example-org","repo":"education-sandbox","username":"demo-candidate","permission":"triage"},
+  "execution":{"apply":false,"external_delivery":false}
+}

@@ -1,0 +1,17 @@
+{
+  "schema":"subactor.examples.legal-sources/v1","as_of":"2026-07-19",
+  "sources":{
+    "EU-GDPR-22":{"authority":"EUR-Lex","url":"https://eur-lex.europa.eu/eli/reg/2016/679/oj"},
+    "EU-AI-ACT-EMPLOYMENT":{"authority":"EUR-Lex","url":"https://eur-lex.europa.eu/eli/reg/2024/1689/oj"},
+    "PL-CEIDG-POWER":{"authority":"Biznes.gov.pl","url":"https://biznes.gov.pl/pl/portal/00151"},
+    "PL-PRAKTYKI-ABSOLWENCKIE":{"authority":"Sejm RP / ELI","url":"https://api.sejm.gov.pl/eli/acts/DU/2018/1244/text.html"},
+    "PL-GOV-PRAKTYKI":{"authority":"Gov.pl","url":"https://www.gov.pl/web/sprawiedliwosc/praktyki-absolwenckie3"},
+    "DE-BETRVG-87":{"authority":"Bundesministerium der Justiz","url":"https://www.gesetze-im-internet.de/betrvg/__87.html"},
+    "DE-AUEG-1":{"authority":"Bundesministerium der Justiz","url":"https://www.gesetze-im-internet.de/a_g/BJNR113930972.html"},
+    "DE-BMAS-WERKVERTRAG":{"authority":"BMAS","url":"https://www.bmas.de/DE/Arbeit/Arbeitsrecht/Leiharbeit-Werkvertraege/FAQ-Werkvertraege/faq-werkvertraege-art.html"},
+    "UK-GOV-STATUS-2026":{"authority":"GOV.UK","url":"https://www.gov.uk/government/publications/employment-status-and-employment-rights/employment-status-and-employment-rights-guidance-for-hr-professionals-legal-professionals-and-other-groups"},
+    "UK-GOV-SELFEMPLOYED":{"authority":"GOV.UK","url":"https://www.gov.uk/employment-status/selfemployed-contractor"},
+    "UK-ICO-ADM-2026":{"authority":"ICO","url":"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/what-do-we-need-to-do-if-we-use-monitoring-tools-that-use-solely-automated-processes/"},
+    "CA-DIR-ABC":{"authority":"California DIR","url":"https://www.dir.ca.gov/dlse/FAQ_IndependentContractor.htm"}
+  }
+}

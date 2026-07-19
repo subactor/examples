@@ -1,0 +1,7 @@
+{
+  "id":"pl-founder-unavailable","jurisdiction":"pl-eu","organization":"demo-global","now":"2030-01-01T05:00:00Z",
+  "facts":{"contract_type":"authority-mandate","action":"organization.represent","mandate_active":true,"mandate_scope_matches":true},
+  "active_mandates":["human:deputy-founder"],
+  "presence":{"human:founder":{"heartbeat_missing":true,"multichannel_timeout":true,"unavailable_since":"2030-01-01T00:00:00Z"}},
+  "budget_category":"legal_continuity","estimated_cost_eur":0
+}

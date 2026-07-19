@@ -1,0 +1,32 @@
+{
+  "schema":"subactor.company-process/v1","id":"founder-offer-to-intern-first-ticket",
+  "invariants":["no_work_before_signed_basis","no_access_before_identity","least_privilege","evidence_per_step","continue_independent_departments","no_global_waiting_input"],
+  "steps":[
+    {"id":"founder-order","department":"governance","uri":"organization://authority/order/query/verify","required_capabilities":["organization.goal.authorize"]},
+    {"id":"offer-generate","department":"sales","uri":"document://company/offer/command/generate","depends_on":["founder-order"]},
+    {"id":"project-discover","department":"web","uri":"fs://projects/manifest/query/read","depends_on":["founder-order"]},
+    {"id":"plesk-preflight","department":"admin","uri":"plesk://host/subscription/query/capabilities","depends_on":["project-discover"],"labels":["infrastructure","service-impact","revenue"],"on_fail":"ticket_and_continue"},
+    {"id":"site-generate","department":"web","uri":"site-generator://host/site/command/generate","depends_on":["project-discover"]},
+    {"id":"domain-ensure","department":"admin","uri":"plesk://host/domain/command/ensure","depends_on":["plesk-preflight","site-generate"],"labels":["infrastructure","service-impact"],"on_fail":"ticket_and_continue"},
+    {"id":"site-publish","department":"web","uri":"plesk://host/site/command/sync","depends_on":["domain-ensure"]},
+    {"id":"site-verify","department":"web","uri":"plesk://host/site/command/publish-verify","depends_on":["site-publish"]},
+    {"id":"internship-legal-preflight","department":"hr","uri":"legal://pl/graduate-practice/query/eligibility","depends_on":["founder-order"],"labels":["legal","person-impact"],"required_capabilities":["legal.employment.classify"]},
+    {"id":"recruitment-offer","department":"hr","uri":"recruitment://offer/command/publish","depends_on":["internship-legal-preflight","offer-generate"]},
+    {"id":"candidate-intake","department":"hr","uri":"recruitment://candidate/command/intake","depends_on":["recruitment-offer"]},
+    {"id":"interview-start","department":"hr","uri":"recruitment://candidate/conversation/command/start","depends_on":["candidate-intake"]},
+    {"id":"interview-invite","department":"hr","uri":"email://host/message/command/send","depends_on":["interview-start"]},
+    {"id":"interview-evidence","department":"hr","uri":"recruitment://candidate/conversation/query/evidence","depends_on":["interview-invite"]},
+    {"id":"human-selection","department":"hr","uri":"human://registry/actor/command/employment-decision","depends_on":["interview-evidence"],"labels":["person-impact"],"required_capabilities":["human.employment.decision"]},
+    {"id":"contract-generate","department":"legal","uri":"document://worker-contract/command/generate","depends_on":["human-selection","internship-legal-preflight"]},
+    {"id":"esign-create","department":"legal","uri":"esign://provider/envelope/command/create","depends_on":["contract-generate"]},
+    {"id":"contract-invite","department":"legal","uri":"email://host/message/command/send","depends_on":["esign-create"]},
+    {"id":"esign-status","department":"legal","uri":"esign://provider/envelope/query/status","depends_on":["contract-invite"]},
+    {"id":"identity-create","department":"admin","uri":"identity://worker/command/create","depends_on":["esign-status"]},
+    {"id":"mailbox-create","department":"admin","uri":"plesk://host/mailbox/command/create","depends_on":["identity-create"]},
+    {"id":"github-invite","department":"dev","uri":"github://host/repo/collaborator/command/invite","depends_on":["identity-create"]},
+    {"id":"first-ticket","department":"dev","uri":"github://host/issue/command/create","depends_on":["github-invite"]},
+    {"id":"ticket-assign","department":"dev","uri":"github://host/issue/command/assign","depends_on":["first-ticket"]},
+    {"id":"welcome-email","department":"hr","uri":"email://host/message/command/send","depends_on":["mailbox-create","ticket-assign"]},
+    {"id":"onboarding-evidence","department":"hr","uri":"evidence://worker/onboarding/command/seal","depends_on":["welcome-email"]}
+  ]
+}

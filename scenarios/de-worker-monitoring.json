@@ -1,0 +1,5 @@
+{
+  "id":"de-worker-monitoring","jurisdiction":"de-eu","organization":"demo-global",
+  "facts":{"contract_type":"employment","action":"performance.monitor","significant_effect":true,"works_council_exists":true},
+  "budget_category":"employment_continuity","estimated_cost_eur":200
+}

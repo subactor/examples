@@ -1,0 +1,9 @@
+VERSION: 1
+SUITE DE employment continuity:
+  TEST worker monitoring requests codetermination capability:
+    EXPECT employment.works_council_exists == true
+    EXPECT resolution.required_capability == "human.works_council.codetermination"
+  TEST agency assignment without permit does not execute:
+    EXPECT agency.permit_valid == false
+    EXPECT task.state == "legally_impossible"
+    EXPECT platform.mode == "continuity"

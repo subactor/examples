@@ -1,0 +1,46 @@
+CONTRACT company-autonomy-operator
+DELEGATED_BY organization:constitutional-authority
+PRINCIPAL bot:company-operator
+
+ALLOW MODEL project-business-bootstrap.pl.aql
+ALLOW MODEL project-site-publication.pl.aql
+ALLOW MODEL onboarding-communications.pl.aql
+ALLOW MODEL contract-lifecycle.pl.aql
+ALLOW OQL organization.goal.verify
+ALLOW OQL document.generate
+ALLOW OQL recruitment.offer.publish
+ALLOW OQL recruitment.conversation.run
+ALLOW OQL human.employment.decision
+ALLOW OQL esign.envelope.create
+ALLOW OQL esign.envelope.status
+ALLOW OQL email.send
+ALLOW OQL identity.create
+ALLOW OQL plesk.subscription.query
+ALLOW OQL plesk.domain.ensure
+ALLOW OQL plesk.site.publish
+ALLOW OQL plesk.mailbox.create
+ALLOW OQL github.collaborator.invite
+ALLOW OQL github.issue.create
+ALLOW OQL github.issue.assign
+ALLOW OQL evidence.seal
+ALLOW URI_PROCESS organization://*
+ALLOW URI_PROCESS document://*
+ALLOW URI_PROCESS recruitment://*
+ALLOW URI_PROCESS human://registry/actor/command/employment-decision
+ALLOW URI_PROCESS esign://provider/**
+ALLOW URI_PROCESS email://host/message/command/send
+ALLOW URI_PROCESS identity://worker/**
+ALLOW URI_PROCESS site-generator://host/site/command/generate
+ALLOW URI_PROCESS plesk://host/subscription/query/capabilities
+ALLOW URI_PROCESS plesk://host/domain/command/ensure
+ALLOW URI_PROCESS plesk://host/site/**
+ALLOW URI_PROCESS plesk://host/mailbox/command/create
+ALLOW URI_PROCESS github://host/repo/collaborator/command/invite
+ALLOW URI_PROCESS github://host/issue/**
+ALLOW URI_PROCESS evidence://worker/onboarding/command/seal
+ALLOW EMAIL_DOMAIN example.test
+ALLOW EMAIL_DOMAIN autonomicznosc.pl
+
+LIMIT STEPS 60
+LIMIT EXECUTIONS 1000
+EXPIRES 2030-12-31T23:59:59Z

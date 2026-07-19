@@ -1,0 +1,5 @@
+{
+  "id":"ca-contractor-abc-fail","jurisdiction":"us-ca","organization":"demo-global",
+  "facts":{"contract_type":"b2b-services","action":"work.assign","abc_a":true,"abc_b":false,"abc_c":true},
+  "budget_category":"legal_continuity","estimated_cost_eur":900
+}

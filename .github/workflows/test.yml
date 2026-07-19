@@ -1,0 +1,34 @@
+name: autonomy-examples
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout examples
+        uses: actions/checkout@v4
+        with:
+          path: examples
+      - name: Checkout Resolution Engine
+        uses: actions/checkout@v4
+        with:
+          repository: subactor/orchestrator
+          path: orchestrator
+      - name: Checkout Runtime
+        uses: actions/checkout@v4
+        with:
+          repository: subactor/runtime
+          path: runtime
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run autonomy scenarios
+        working-directory: examples
+        run: npm test

@@ -1,0 +1,23 @@
+VERSION: 1
+SUITE full autonomous company process:
+  TEST all departments continue independently:
+    EXPECT company.departments contains "hr"
+    EXPECT company.departments contains "dev"
+    EXPECT company.departments contains "admin"
+    EXPECT company.departments contains "web"
+    EXPECT company.continue_unblocked == true
+  TEST no work before signed basis:
+    EXPECT github.invite.after == "esign-status"
+    EXPECT first_ticket.after == "github-invite"
+  TEST unpaid graduate practice has legal facts:
+    EXPECT candidate.age_at_start < 30
+    EXPECT candidate.duration_months <= 3
+    EXPECT candidate.written_agreement == true
+    EXPECT candidate.bhp_ready == true
+  TEST Plesk domain creation is capacity gated:
+    EXPECT plesk.preflight.can_create_domain == true
+    EXPECT domain.ensure.after == "plesk-preflight"
+  TEST founder absence escalates without pause:
+    EXPECT escalation.channels contains "email"
+    EXPECT escalation.substitute == "human:deputy-founder"
+    EXPECT platform.paused == false

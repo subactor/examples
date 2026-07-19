@@ -1,0 +1,17 @@
+{
+  "schema":"subactor.examples.jurisdiction/v1","id":"pl-eu","country_code":"PL","as_of":"2026-07-19",
+  "contract_types":{
+    "employment":{"required_facts":["action","significant_effect"]},
+    "b2b-services":{"required_facts":["action","framework_agreement_active","within_contract"]},
+    "authority-mandate":{"required_facts":["action","mandate_active","mandate_scope_matches"]},
+    "director-office-holder":{"required_facts":["action","mandate_active"]}
+  },
+  "rules":[
+    {"id":"pl-authority-must-preexist","priority":100,"when":{"contract_type":"authority-mandate","mandate_active":false},"decision":"prohibited","reason_code":"legal_mandate_missing","required_capabilities":["legal.corporate.authority.verify"],"legal_sources":["PL-CEIDG-POWER"]},
+    {"id":"pl-authority-in-scope","priority":90,"when":{"contract_type":"authority-mandate","mandate_active":true,"mandate_scope_matches":true},"decision":"authorized_human","reason_code":"authorized_actor_required","required_capabilities":["organization.represent"],"required_evidence":["mandate_id","scope","expiry"],"legal_sources":["PL-CEIDG-POWER"]},
+    {"id":"pl-employment-significant-decision","priority":80,"when":{"contract_type":"employment","significant_effect":true},"decision":"authorized_human","reason_code":"authorized_actor_required","required_capabilities":["human.employment.decision"],"required_evidence":["meaningful_review","decision_basis","appeal_path"],"legal_sources":["EU-GDPR-22","EU-AI-ACT-EMPLOYMENT"]},
+    {"id":"pl-b2b-work-order","priority":60,"when":{"contract_type":"b2b-services","framework_agreement_active":true,"within_contract":true,"action":"work.assign"},"decision":"autonomous","reason_code":"framework_work_order","required_evidence":["framework_id","work_order_id","scope_hash"],"legal_sources":["PL-CEIDG-POWER"]},
+    {"id":"pl-routine-employment-task","priority":50,"when":{"contract_type":"employment","action":"work.assign","significant_effect":false},"decision":"autonomous","reason_code":"routine_within_role","required_evidence":["role_contract","task_scope"],"legal_sources":[]}
+  ],
+  "default_rule":{"id":"pl-legal-review-default","decision":"authorized_human","reason_code":"jurisdiction_review_required","required_capabilities":["legal.employment.review"],"legal_sources":["EU-GDPR-22"]}
+}

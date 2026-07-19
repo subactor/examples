@@ -1,0 +1,5 @@
+{
+  "id":"de-false-self-employment","jurisdiction":"de-eu","organization":"demo-global",
+  "facts":{"contract_type":"b2b-services","action":"work.assign","independent_in_practice":false,"within_contract":true},
+  "budget_category":"legal_continuity","estimated_cost_eur":600
+}

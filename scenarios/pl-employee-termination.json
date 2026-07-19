@@ -1,0 +1,5 @@
+{
+  "id":"pl-employee-termination","jurisdiction":"pl-eu","organization":"demo-global",
+  "facts":{"contract_type":"employment","action":"employment.terminate","significant_effect":true},
+  "budget_category":"employment_continuity","estimated_cost_eur":0
+}

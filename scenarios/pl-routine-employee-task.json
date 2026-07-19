@@ -1,0 +1,4 @@
+{
+  "id":"pl-routine-employee-task","jurisdiction":"pl-eu","organization":"demo-global","requested_actor":"bot:project-operator",
+  "facts":{"contract_type":"employment","action":"work.assign","significant_effect":false}
+}

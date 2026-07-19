@@ -1,0 +1,4 @@
+{
+  "id":"ca-contractor-abc-pass","jurisdiction":"us-ca","organization":"demo-global","requested_actor":"provider:ca-independent-specialist",
+  "facts":{"contract_type":"b2b-services","action":"work.assign","abc_a":true,"abc_b":true,"abc_c":true}
+}

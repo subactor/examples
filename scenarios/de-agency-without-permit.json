@@ -1,0 +1,5 @@
+{
+  "id":"de-agency-without-permit","jurisdiction":"de-eu","organization":"demo-global",
+  "facts":{"contract_type":"temporary-agency","action":"work.assign","agency_permit_valid":false},
+  "budget_category":"legal_continuity","estimated_cost_eur":500
+}

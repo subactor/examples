@@ -1,0 +1,10 @@
+{
+  "schema":"subactor.examples.roles/v1",
+  "roles":{
+    "employee":{"relationship":"employment","may_delegate_execution":false,"protected_decisions":["hire","terminate","compensation.change","performance.significant"]},
+    "contractor":{"relationship":"services","may_delegate_execution":true,"classification_must_match_reality":true},
+    "agency-worker":{"relationship":"temporary-agency","provider_is_employer":true,"permit_may_be_required":true},
+    "director":{"relationship":"office-holder","corporate_authority_required":true},
+    "authorized-representative":{"relationship":"authority","mandate_must_preexist":true,"subactor_cannot_create_mandate":true}
+  }
+}

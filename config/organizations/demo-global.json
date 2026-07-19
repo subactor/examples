@@ -1,0 +1,28 @@
+{
+  "schema":"subactor.examples.organization/v1","id":"demo-global",
+  "authority_graph":{
+    "root_role":"organization:constitutional-authority",
+    "principals":[
+      {"actor":"human:founder","priority":1,"contract":"founder-mandate","activates_when":{"predecessors":[]}},
+      {"actor":"human:deputy-founder","priority":2,"contract":"deputy-mandate","activates_when":{"predecessors":[{"actor":"human:founder","unavailable_for":"4h","minimum_signals":2}]}},
+      {"actor":"human:continuity-officer","priority":3,"contract":"continuity-mandate","activates_when":{"predecessors":[{"actor":"human:founder","unavailable_for":"12h","minimum_signals":2},{"actor":"human:deputy-founder","unavailable_for":"2h","minimum_signals":2}]}}
+    ],
+    "quorum_groups":[{"id":"continuity-council","actors":["human:operations-lead","human:finance-lead","human:security-lead"],"required":2,"contract":"council-2-of-3"}],
+    "external_fallbacks":[{"provider":"provider:continuity-operator","contract":"continuity-msa","scope":"operational_continuity"}]
+  },
+  "active_mandates":["human:founder","human:deputy-founder","human:continuity-officer","quorum:continuity-council","provider:continuity-operator"],
+  "providers":[
+    {"id":"provider:pl-legal-primary","organization":"PL Employment Counsel A","priority":1,"jurisdictions":["PL"],"contracts":[{"id":"pl-legal-a","status":"active"}],"budget_ceiling_eur":5000,"allowed_capabilities":["legal.employment.review","legal.employment.classify","legal.corporate.authority.verify"]},
+    {"id":"provider:pl-legal-secondary","organization":"PL Employment Counsel B","priority":2,"jurisdictions":["PL"],"contracts":[{"id":"pl-legal-b","status":"active"}],"budget_ceiling_eur":5000,"allowed_capabilities":["legal.employment.review","legal.employment.classify","legal.corporate.authority.verify"]},
+    {"id":"provider:de-works-council","organization":"Demo Internal Works Council","priority":1,"jurisdictions":["DE"],"contracts":[{"id":"works-council-mandate","status":"active"}],"budget_ceiling_eur":1000,"allowed_capabilities":["human.works_council.codetermination"]},
+    {"id":"provider:de-legal","organization":"DE Employment Counsel","priority":2,"jurisdictions":["DE"],"contracts":[{"id":"de-legal","status":"active"}],"budget_ceiling_eur":5000,"allowed_capabilities":["legal.employment.review","legal.employment.classify","legal.agency-work.review"]},
+    {"id":"provider:uk-hr-authority","organization":"UK HR Continuity Team","priority":1,"jurisdictions":["GB"],"contracts":[{"id":"uk-hr-mandate","status":"active"}],"budget_ceiling_eur":3000,"allowed_capabilities":["human.employment.decision"]},
+    {"id":"provider:uk-legal","organization":"UK Employment Counsel","priority":2,"jurisdictions":["GB"],"contracts":[{"id":"uk-legal","status":"active"}],"budget_ceiling_eur":5000,"allowed_capabilities":["legal.employment.review","legal.employment.classify"]},
+    {"id":"provider:ca-legal","organization":"California Employment Counsel","priority":1,"jurisdictions":["US-CA"],"contracts":[{"id":"ca-legal","status":"active"}],"budget_ceiling_eur":5000,"allowed_capabilities":["legal.employment.review","legal.employment.classify"]}
+  ],
+  "continuity_budgets":{
+    "legal_continuity":{"per_event_eur":5000,"monthly_eur":15000,"emergency_reserve_eur":2500},
+    "employment_continuity":{"per_event_eur":3000,"monthly_eur":10000,"emergency_reserve_eur":1000},
+    "operational_continuity":{"per_event_eur":5000,"monthly_eur":20000,"emergency_reserve_eur":2500}
+  }
+}

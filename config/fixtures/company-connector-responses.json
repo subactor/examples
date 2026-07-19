@@ -1,0 +1,29 @@
+{
+  "schema":"subactor.mock-connectors/v1",
+  "routes":{
+    "organization://authority/order/query/verify":{"response":{"ok":true,"authority":"organization:constitutional-authority","order_id":"ORDER-DEMO"}},
+    "document://company/offer/command/generate":{"response":{"ok":true,"artifact":"offer-demo.pdf"}},
+    "fs://projects/manifest/query/read":{"response":{"ok":true,"project":"${fixture.project}"}},
+    "plesk://host/subscription/query/capabilities":{"response":{"ok":true,"subscription":"prototypowanie.pl","can_create_domain":true,"domains_used":1,"domains_limit":10}},
+    "site-generator://host/site/command/generate":{"response":{"ok":true,"source":"${fixture.project.source}","files":["index.html","assets/site.css"]}},
+    "plesk://host/domain/command/ensure":{"response":{"ok":true,"domain":"${fixture.project.domain}","created":false,"dry_run":true}},
+    "plesk://host/site/command/sync":{"response":{"ok":true,"dry_run":true,"files_planned":2}},
+    "plesk://host/site/command/publish-verify":{"response":{"ok":true,"status":"dry_run_verified"}},
+    "legal://pl/graduate-practice/query/eligibility":{"evaluator":"rules","facts_path":"candidate"},
+    "recruitment://offer/command/publish":{"response":{"ok":true,"offer_id":"OFFER-DEMO","delivery":"internal"}},
+    "recruitment://candidate/command/intake":{"response":{"ok":true,"candidate_id":"${fixture.candidate.id}","consent_recorded":true}},
+    "recruitment://candidate/conversation/command/start":{"response":{"ok":true,"conversation_id":"CONV-DEMO"}},
+    "recruitment://candidate/conversation/query/evidence":{"response":{"ok":true,"evidence_id":"INTERVIEW-DEMO","candidate_statement_recorded":true}},
+    "human://registry/actor/command/employment-decision":{"response":{"ok":true,"actor":"human:hr-authority","decision":"eligible_for_contract","meaningful_review":true}},
+    "document://worker-contract/command/generate":{"response":{"ok":true,"document_id":"CONTRACT-DEMO","draft":false,"placeholders":0}},
+    "esign://provider/envelope/command/create":{"response":{"ok":true,"envelope_id":"ENV-DEMO","status":"sent","idempotent":true}},
+    "esign://provider/envelope/query/status":{"response":{"ok":true,"envelope_id":"ENV-DEMO","status":"signed","evidence_id":"ESIGN-DEMO"}},
+    "identity://worker/command/create":{"response":{"ok":true,"principal":"human:intern-demo","contract":"graduate-practice-demo","minimal_access":true}},
+    "plesk://host/mailbox/command/create":{"response":{"ok":true,"email":"intern@example.test","credential_in_vault":true}},
+    "github://host/repo/collaborator/command/invite":{"response":{"ok":true,"invitation_id":101,"permission":"triage"}},
+    "github://host/issue/command/create":{"response":{"ok":true,"issue_number":1,"url":"https://github.example.test/issues/1"}},
+    "github://host/issue/command/assign":{"response":{"ok":true,"issue_number":1,"assignee":"demo-candidate"}},
+    "email://host/message/command/send":{"response":{"ok":true,"message_id":"MAIL-${step.id}","delivered":false,"dry_run":true}},
+    "evidence://worker/onboarding/command/seal":{"response":{"ok":true,"bundle_id":"EVIDENCE-DEMO","sealed":true}}
+  }
+}
