@@ -57,8 +57,13 @@ test("jurisdiction policy evaluation is data-driven and fail closed",async()=>{
 });
 
 test("EQL pressure selects stronger escalation without authority expansion",()=>{
-  assert.equal(measurePressure({elapsed_minutes:10,sla_minutes:60}).strategy,"monitor");
-  assert.equal(measurePressure({elapsed_minutes:120,sla_minutes:60,revenue_risk:1,candidate_impact:1}).strategy,"quorum_and_external_provider");
+  const low=measurePressure({elapsed_minutes:10,sla_minutes:60});
+  const critical=measurePressure({elapsed_minutes:120,sla_minutes:60,signals:{financial_impact:1,person_impact:1}});
+  assert.equal(low.profile,"eql:pressure-policy/v1");
+  assert.equal(low.strategy,"monitor");
+  assert.equal(critical.strategy,"quorum_and_external_provider");
+  assert.deepEqual(critical.contributions,{elapsed_sla:40,financial_impact:25,person_impact:20,service_impact:0});
+  assert.match(critical.policy_fingerprint,/^[a-f0-9]{64}$/);
 });
 
 test("company AQL contract compiles under constitutional authority",async()=>{

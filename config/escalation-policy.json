@@ -3,13 +3,11 @@
   "id":"company-continuity",
   "sample_elapsed_minutes":65,
   "sla_minutes":60,
-  "thresholds":{"email":30,"deputy":55,"continuity":80},
   "signal_labels":{
     "service_impact":["service-impact","infrastructure"],
     "person_impact":["person-impact"],
     "financial_impact":["financial-impact","revenue"]
   },
-  "signal_weights":{"service_impact":30,"person_impact":20,"financial_impact":25},
   "default_route":{"owner":"human:founder","channels":["planfile","email"],"substitute_after_sla":"human:deputy-founder","sla_minutes":60},
   "routes":[
     {"labels_any":["infrastructure","service-impact"],"owner":"human:operations-lead","channels":["planfile","email"],"substitute_after_sla":"human:continuity-officer","sla_minutes":30},

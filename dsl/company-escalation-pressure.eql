@@ -1,29 +1,15 @@
-DECIDE "company_escalation_pressure" {
-  AUDIENCE locale="pl-PL" role="continuity-operator" knowledge="expert"
-  INTENT action=escalate artifact=company_task confidence=1.0
-  SUBJECT "SLA, wpływ na kandydata, przychód i bezpieczeństwo"
-  EXPERIENCE pace=deliberate load=high friction=low
-  AFFECT labels=["time_pressure", "candidate_impact", "revenue_risk"] needs=["continuity", "clarity", "lawful_path"]
-  DECISION stage=acting commitment=high next_need=authorized_substitute
-  EXPECT hard=["no_global_pause", "no_authority_expansion", "candidate_fairness", "evidence_bundle"]
-  EXPECT quality=["sla_visible", "multi_channel", "substitute_ready"]
-  PROTECT ["candidate_dignity", "personal_data", "worker_rights", "credentials"]
-  SELECT_PROCESS "resolution-continuity-escalation" {
-    PROFILE pace=fast density=low max_sections=4
-    STEP pressure_measure context.freeze approval=false
-    STEP planfile_ticket task.create approval=false
-    STEP email_reminder email.send approval=false
-    STEP deputy_substitute human.work.replace approval=false
-    STEP quorum_resolve authority.quorum approval=false
-    STEP provider_fallback outsourcing.work_order.create approval=false
-    STEP evidence_seal evidence.seal approval=false
-  }
-  GUARD no_false_scarcity
-  GUARD no_hidden_cost
-  GUARD no_shaming
-  GUARD no_fear_amplification
-  GUARD no_sensitive_inference
-  GUARD respect_opt_out
-  GUARD behavior_is_soft_only
-  GUARD content_requires_evidence
-}
+PROFILE eql:pressure-policy/v1
+POLICY "company-continuity"
+SCORE MIN 0 MAX 100 ROUND nearest
+
+# All business semantics are policy data. The runtime only evaluates generic
+# ratios, bounded numeric factors and ordered levels.
+RATIO elapsed_sla NUMERATOR elapsed_minutes DENOMINATOR sla_minutes WEIGHT 40 CAP 40
+FACTOR financial_impact PATH signals.financial_impact WEIGHT 25 MIN 0 MAX 1
+FACTOR person_impact PATH signals.person_impact WEIGHT 20 MIN 0 MAX 1
+FACTOR service_impact PATH signals.service_impact WEIGHT 30 MIN 0 MAX 1
+
+LEVEL low MIN 0 STRATEGY "monitor"
+LEVEL medium MIN 30 STRATEGY "email_reminder"
+LEVEL high MIN 55 STRATEGY "email_and_deputy"
+LEVEL critical MIN 80 STRATEGY "quorum_and_external_provider"

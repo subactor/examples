@@ -37,7 +37,7 @@ export async function runWorkflow({definition,fixture,adapter,failurePolicy={}})
     results.push(entry);outcomes.set(step.id,entry);
     if(!ok){
       const route=failureRoute(step,failurePolicy);
-      const pressure=measurePressure({elapsed_minutes:failurePolicy.sample_elapsed_minutes||65,sla_minutes:route.sla_minutes||failurePolicy.sla_minutes||60,signals:failureSignals(step,failurePolicy),weights:failurePolicy.signal_weights,thresholds:failurePolicy.thresholds});
+      const pressure=measurePressure({elapsed_minutes:failurePolicy.sample_elapsed_minutes||65,sla_minutes:route.sla_minutes||failurePolicy.sla_minutes||60,signals:failureSignals(step,failurePolicy)});
       const ticket={id:`AUTO-${tickets.length+1}`,owner:route.owner,step:step.id,reason:response?.error||response?.reasons?.[0]||"blocked",state:"resolving",pressure};
       tickets.push(ticket);
       escalations.push({ticket_id:ticket.id,channels:route.channels||[],substitute_after_sla:route.substitute_after_sla,pressure});
