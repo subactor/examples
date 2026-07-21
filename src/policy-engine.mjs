@@ -11,12 +11,15 @@ function ruleMatches(rule, facts) {
   return Object.entries(rule.when || {}).every(([key,value])=>matches(facts[key],value));
 }
 
+function isRuleEffective(rule, now) {
+  if (rule.effective_from && now < new Date(rule.effective_from)) return false;
+  if (rule.effective_until && now >= new Date(rule.effective_until)) return false;
+  return true;
+}
+
 export function evaluateLegalPolicy(jurisdiction, scenario, now=new Date()) {
-  const effectiveRules=(jurisdiction.rules || []).filter((rule)=>{
-    if (rule.effective_from && now < new Date(rule.effective_from)) return false;
-    if (rule.effective_until && now >= new Date(rule.effective_until)) return false;
-    return ruleMatches(rule,scenario.facts || {});
-  });
+  const effectiveRules=(jurisdiction.rules || []).filter((rule)=>
+    isRuleEffective(rule, now) && ruleMatches(rule,scenario.facts || {}));
   const ranked=[...effectiveRules].sort((a,b)=>Number(b.priority || 0)-Number(a.priority || 0));
   const rule=ranked[0] || jurisdiction.default_rule;
   if (!rule) throw new Error(`jurisdiction_policy_no_match:${jurisdiction.id}`);

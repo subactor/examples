@@ -10,30 +10,19 @@ function resolutionConfig(organization) {
   };
 }
 
-export async function simulateScenario(input,{now}={}) {
-  const scenario=typeof input==="string"?await loadScenario(input):structuredClone(input);
-  const jurisdiction=await loadJurisdiction(scenario.jurisdiction);
-  const organization=await loadOrganization(scenario.organization || "demo-global");
-  const at=now || new Date(scenario.now || Date.now());
-  const engagement=validateEngagement(jurisdiction,scenario);
-  const policy=evaluateLegalPolicy(jurisdiction,scenario,at);
+function applyEngagementOverride(policy,engagement) {
+  if (engagement.valid) return policy;
+  return {
+    ...policy,
+    decision:"authorized_human",
+    reason_code:"engagement_facts_incomplete",
+    required_capabilities:["legal.employment.classify"],
+    required_evidence:engagement.missing,
+  };
+}
 
-  if (!engagement.valid) {
-    policy.decision="authorized_human";
-    policy.reason_code="engagement_facts_incomplete";
-    policy.required_capabilities=["legal.employment.classify"];
-    policy.required_evidence=engagement.missing;
-  }
-
-  if (policy.decision === "autonomous") {
-    return {
-      scenario_id:scenario.id,jurisdiction:jurisdiction.id,engagement,policy,
-      task_state:"executing",platform_mode:"normal",continue_unblocked:true,
-      executor:scenario.requested_actor || "bot:operations",
-    };
-  }
-
-  const blocker={
+function buildBlockerInput(scenario,jurisdiction,organization,policy,at) {
+  return {
     task_id:scenario.id,
     reason_code:policy.decision === "prohibited" ? "legally_impossible" : policy.reason_code,
     required_capabilities:policy.required_capabilities,
@@ -47,6 +36,25 @@ export async function simulateScenario(input,{now}={}) {
     monthly_spent_eur:scenario.monthly_spent_eur || 0,
     now:at,
   };
+}
+
+export async function simulateScenario(input,{now}={}) {
+  const scenario=typeof input==="string"?await loadScenario(input):structuredClone(input);
+  const jurisdiction=await loadJurisdiction(scenario.jurisdiction);
+  const organization=await loadOrganization(scenario.organization || "demo-global");
+  const at=now || new Date(scenario.now || Date.now());
+  const engagement=validateEngagement(jurisdiction,scenario);
+  const policy=applyEngagementOverride(evaluateLegalPolicy(jurisdiction,scenario,at),engagement);
+
+  if (policy.decision === "autonomous") {
+    return {
+      scenario_id:scenario.id,jurisdiction:jurisdiction.id,engagement,policy,
+      task_state:"executing",platform_mode:"normal",continue_unblocked:true,
+      executor:scenario.requested_actor || "bot:operations",
+    };
+  }
+
+  const blocker=buildBlockerInput(scenario,jurisdiction,organization,policy,at);
   const resolution=resolveBlocker(blocker,resolutionConfig(organization));
   return {scenario_id:scenario.id,jurisdiction:jurisdiction.id,engagement,policy,...resolution};
 }
